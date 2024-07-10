@@ -1,0 +1,11 @@
+[package]
+name = "cmatrix"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rand = "*"
+libc="*"
+confy="*"
+serde="*"
+serde_derive="*"
