@@ -7,5 +7,5 @@ pub fn get_random_snake_position_in_bound(max_bounds: (usize, usize)) -> (usize,
 
 pub fn spawn_snake_in_random_interval() -> bool {
     let mut rng = rand::thread_rng();
-    rng.gen_range(0..6) == 3 // Should generate one snake every 6 cycles
+    rng.gen_range(0..4) == 3 // Should generate one snake every 6 cycles
 }

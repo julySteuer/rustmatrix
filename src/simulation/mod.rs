@@ -13,7 +13,7 @@ mod delays {
     use std::{time, thread};
 
     pub const one_second: time::Duration = time::Duration::from_secs(1);
-    pub const ten_millis: time::Duration = time::Duration::from_millis(10);
+    pub const five_hundred_millis: time::Duration = time::Duration::from_millis(500);
     pub fn wait(delay: time::Duration) {
         thread::sleep(delay);
     }
@@ -26,6 +26,8 @@ pub fn run_simulation() {
     let mut state = get_sim_state_by_name(&cfg.state);
 
     while !state.should_stop() {
+        let mut delete_list: Vec<usize> = Vec::new();
+
         renderer.clear_scr(); 
         if spawn_snake_in_random_interval() {
             // add new snake
@@ -33,9 +35,17 @@ pub fn run_simulation() {
             snakes.push(Snake::new(new_snake_pos));
         }
 
-        for snake in &mut snakes { // update sycle 
+        for (i, snake) in (&mut snakes).into_iter().enumerate() { // update sycle 
             snake.update();
             snake.render(&renderer);
+            if snake.should_delete() {
+                delete_list.push(i);
+            }
+        }
+        
+        delete_list.sort_by(|a, b| b.cmp(a));
+        for to_be_deleted in delete_list { // Biggest one has to be removed first 
+            snakes.remove(to_be_deleted);
         }
         state.delay();
     }

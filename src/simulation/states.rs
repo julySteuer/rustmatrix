@@ -40,7 +40,7 @@ impl SimState for DebugState {
 
 impl SimState for GameState {
     fn delay(&mut self) {
-        delays::wait(delays::ten_millis)
+        delays::wait(delays::five_hundred_millis)
     }
     
     fn should_stop(&mut self) -> bool {
